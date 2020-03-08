@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# db
+*.sqlite
+
 # C extensions
 *.so
 
@@ -133,3 +136,5 @@ dmypy.json
 
 # pytype static type analyzer
 .pytype/
+
+.DS_Store

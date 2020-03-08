@@ -1,5 +1,7 @@
 import httpx
 
+import dateutil.parser
+
 from models import Data
 
 
@@ -14,7 +16,8 @@ async def create_or_update_data_for_character(character):
     r = httpx.get(character.url)
     data = r.json()
 
-    last_update = data["updatedUtc"]
+    last_update = dateutil.parser.parse(data["updatedUtc"])
+    print(last_update)
 
     if await Data.objects.filter(character=character, last_update=last_update).exists():
         return
@@ -37,4 +40,5 @@ async def create_or_update_data_for_character(character):
         "max_dps_skill": max_dps_skill,
         "pob_export": data["pathOfBuildingExport"],
         "data": data,
+        "last_update": last_update,
     })

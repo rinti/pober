@@ -2,8 +2,8 @@
 
 {% block content %}
     <section>
-        <h2>Data</h2>
-        <a href="/">Back to start</a>
+        <h2 class="text-2xl font-black mb-4">Data</h2>
+        <a href="/" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 inline-block rounded mb-4">Back to start</a>
 
         <table width="100%">
             <tr>
@@ -24,7 +24,7 @@
                 <td>
                     {{d.max_dps_skill}}: {{ d.max_dps}}
                 </td>
-                <td><a href="">Copy to clipboard</a></td>
+                <td><a href="" class="text-blue-600">Copy to clipboard</a></td>
                 <td>{{ d.last_update }}</td>
             </tr>
             {% endfor %}

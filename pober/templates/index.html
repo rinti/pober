@@ -5,27 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>pober</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Pober</h1>
+    <main style="max-width: 70ch;padding: 2ch;margin: auto;">
+        <h1 class="text-4xl font-black mb-4">Pober</h1>
 
-    <section>
-        <h2>Add player</h2>
-        <form method="post" action="">
-            <input type="text" name="url" placeholder="Poe ninja link">
-            <button type="submit">Add</button>
-        </form>
-    </section>
-
-    {% block content %}
-        <section>
-            <h2>Tracked urls</h2>
-            <ul>
-                {% for c in characters %}
-                <li><a href="/{{ c.id }}">{{ c.url }}</a></li>
-                {% endfor %}
-            </ul>
+        <section class="flex mb-4">
+            <form method="post" action="">
+                <h2 class="text-2xl font-black mb-4">Add player</h2>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="url">
+                    Api link
+                </label>
+                <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 appearance-none leading-normal mb-4" type="text" id="url" name="url" placeholder="Poe ninja link">
+                <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded" type="submit">Add</button>
+            </form>
         </section>
-    {% endblock %}
+
+        {% block content %}
+            <section>
+                <h2 class="text-2xl font-black mb-4">Tracked urls</h2>
+                <ul>
+                    {% for c in characters %}
+                        <li>
+                            <a class="text-blue-600" href="/{{ c.id }}">{{ c.url }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endblock %}
+    </main>
 </body>
 </html>

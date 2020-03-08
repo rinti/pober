@@ -4,30 +4,36 @@
     <section>
         <h2 class="text-2xl font-black mb-4">Data</h2>
         <a href="/" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 inline-block rounded mb-4">Back to start</a>
-
-        <table width="100%">
+        
+        <div class="bg-white shadow-md rounded my-6">
+        <table class="text-left w-full border-collapse">
             <tr>
-                <th align="left">Class</th>
-                <th align="left">Defense</th>
-                <th align="left">DPS</th>
-                <th align="left">Export</th>
-                <th align="left">Updated</th>
+                <!-- <th class="py-4 px-6 bg-gray-100 font-bold uppercase text-sm text-gray-dark border-b border-gray-light" align="left">Class</th> -->
+                <th class="py-4 px-6 bg-gray-100 font-bold uppercase text-sm text-gray-dark border-b border-gray-light" align="left">Defense</th>
+                <th class="py-4 px-6 bg-gray-100 font-bold uppercase text-sm text-gray-dark border-b border-gray-light" align="left">DPS</th>
+                <th class="py-4 px-6 bg-gray-100 font-bold uppercase text-sm text-gray-dark border-b border-gray-light" align="left">Export</th>
+                <th class="py-4 px-6 bg-gray-100 font-bold uppercase text-sm text-gray-dark border-b border-gray-light" align="left">Updated</th>
             </tr>
             {% for d in data %}
 
             <tr>
-                <td>{{ d.character_class}}</td>
-                <td>
-                    ES: {{ d.energy_shield}}<br>
-                    Life: {{ d.life }}
+                <!-- <td class="py-4 px-6 border-b border-grey-light">{{ d.character_class}}</td> -->
+                <td class="py-4 px-6 border-b border-grey-light">
+                    <span class="bg-blue-400 px-4 py-2 inline-block mb-2 rounded">{{ d.energy_shield}}</span><br>
+                    <span class="bg-red-400 px-4 py-2 inline-block rounded">{{ d.life }}</span>
                 </td>
-                <td>
-                    {{d.max_dps_skill}}: {{ d.max_dps}}
+                <td class="py-4 px-6 border-b border-grey-light">
+                    {{d.max_dps_skill}}<br>{{ d.max_dps}}
                 </td>
-                <td><a href="" class="text-blue-600">Copy to clipboard</a></td>
-                <td>{{ d.last_update }}</td>
+                <td class="py-4 px-6 border-b border-grey-light"><a href="" class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-4 border-b-4 border-yellow-700 hover:border-yellow-500 rounded">Copy</a></td>
+                <td class="py-4 px-6 border-b border-grey-light">
+                    {% if d.last_update %}
+                        {{ d.last_update.strftime('%Y-%m-%d %H:%M:%S') }}
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
+        </table>
         </table>
     </section>
 {% endblock %}

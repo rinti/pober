@@ -25,6 +25,31 @@ class Character(orm.Model):
             last_update=datetime.datetime.now()
         )
 
+class Data(orm.Model):
+    __tablename__ = "data"
+    __database__ = database
+    __metadata__ = metadata
+
+    id = orm.Integer(primary_key=True)
+    character = orm.ForeignKey(Character)
+
+    level = orm.Integer()
+    energy_shield = orm.Integer()
+    life = orm.Integer()
+    pob_export = orm.Text()
+    max_dps = orm.Integer()
+    max_dps_skill = orm.String(max_length=255)
+    character_class = orm.String(max_length=255)
+    data = orm.JSON()
+    last_update = orm.DateTime(allow_null=True)
+
+    @staticmethod
+    async def create_data(**kwargs):
+        await Data.objects.create(
+            **kwargs
+        )
+
+
 def setup_databases():
     engine = sqlalchemy.create_engine(str(database.url))
     metadata.create_all(engine)

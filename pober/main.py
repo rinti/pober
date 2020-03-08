@@ -3,14 +3,19 @@ from asyncio import sleep, ensure_future
 from starlette.applications import Starlette
 from starlette.routing import Route
 from starlette.templating import Jinja2Templates
-from models import setup_databases, Character
+from starlette.background import BackgroundTask
 
-SLEEP_TIME = 600
+from models import setup_databases, Character
+from ninja import create_or_update_data_for_character
+
+SLEEP_TIME = 10
 
 templates = Jinja2Templates(directory='templates')
 
 
 async def check_for_updates():
+    for character in await Character.objects.all():
+        await create_or_update_data_for_character(character)
 
     await sleep(SLEEP_TIME)
     await check_for_updates()
@@ -18,7 +23,6 @@ async def check_for_updates():
 
 async def setup():
     setup_databases()
-    # await Character.objects.create(url="https://poe.ninja/challengehc/builds/char/oBezz/Joxddd?i=0")
     ensure_future(check_for_updates())
 
 

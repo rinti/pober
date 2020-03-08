@@ -17,16 +17,15 @@
         </form>
     </section>
 
-    <section>
-        <h2>Tracked urls</h2>
-        <ul>
-            {% for c in characters %}
-            <li><a href="/{{ c.id }}">{{ c.url }}</a></li>
-            {% endfor %}
-        </ul>
-    </section>
-
     {% block content %}
+        <section>
+            <h2>Tracked urls</h2>
+            <ul>
+                {% for c in characters %}
+                <li><a href="/{{ c.id }}">{{ c.url }}</a></li>
+                {% endfor %}
+            </ul>
+        </section>
     {% endblock %}
 </body>
 </html>

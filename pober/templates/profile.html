@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <section>
+        <h2>Data</h2>
+        <a href="/">Back to start</a>
+
+        <table width="100%">
+            <tr>
+                <th align="left">Class</th>
+                <th align="left">Defense</th>
+                <th align="left">DPS</th>
+                <th align="left">Export</th>
+                <th align="left">Updated</th>
+            </tr>
+            {% for d in data %}
+
+            <tr>
+                <td>{{ d.character_class}}</td>
+                <td>
+                    ES: {{ d.energy_shield}}<br>
+                    Life: {{ d.life }}
+                </td>
+                <td>
+                    {{d.max_dps_skill}}: {{ d.max_dps}}
+                </td>
+                <td><a href="">Copy to clipboard</a></td>
+                <td>{{ d.last_update }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+{% endblock %}

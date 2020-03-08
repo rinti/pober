@@ -5,10 +5,10 @@ from starlette.routing import Route
 from starlette.templating import Jinja2Templates
 from starlette.background import BackgroundTask
 
-from models import setup_databases, Character
+from models import setup_databases, Character, Data
 from ninja import create_or_update_data_for_character
 
-SLEEP_TIME = 10
+SLEEP_TIME = 60 * 60
 
 templates = Jinja2Templates(directory='templates')
 
@@ -26,6 +26,18 @@ async def setup():
     ensure_future(check_for_updates())
 
 
+async def profile(request):
+    id = request.path_params['character_id']
+
+    character = await Character.objects.get(id=id)
+
+    context = {
+        "request": request,
+        "data": await Data.objects.filter(character=character).all(),
+    }
+
+    return templates.TemplateResponse("profile.html", context)
+
 async def homepage(request):
     if request.method == "POST":
         data = await request.form()
@@ -38,7 +50,8 @@ async def homepage(request):
     return templates.TemplateResponse("index.html", context)
 
 routes = [
-    Route("/", endpoint=homepage, methods=["GET", "POST"])
+    Route("/", endpoint=homepage, methods=["GET", "POST"]),
+    Route("/{character_id:int}", endpoint=profile)
 ]
 
 app = Starlette(debug=True, routes=routes, on_startup=[setup])

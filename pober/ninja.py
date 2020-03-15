@@ -1,4 +1,5 @@
 import httpx
+import uuid
 
 import dateutil.parser
 
@@ -13,11 +14,20 @@ def get_dps(data):
     
 
 async def create_or_update_data_for_character(character):
-    r = httpx.get(character.url)
+    urlsplit = character.url.split("/")
+    urlsplit[5] = str(uuid.uuid4())
+    url = "/".join(urlsplit)
+
+    r = httpx.get(url)
+
+    if r.status_code == 500:
+        return
+    else:
+        print("Happy fun times", character.id)
+
     data = r.json()
 
     last_update = dateutil.parser.parse(data["updatedUtc"])
-    print(last_update)
 
     if await Data.objects.filter(character=character, last_update=last_update).exists():
         return

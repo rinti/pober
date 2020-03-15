@@ -28,7 +28,7 @@
                 <ul>
                     {% for c in characters %}
                         <li>
-                            <a class="text-blue-600" href="/{{ c.id }}">{{ c.url }}</a>
+                            <a class="text-blue-600" href="/{{ c.id }}">{{ c.account }}, {{ c.name }}, {{ c.level }} ({{ c.updated }})</a>
                         </li>
                     {% endfor %}
                 </ul>

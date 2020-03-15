@@ -1,3 +1,4 @@
+from urllib.parse import urlparse, parse_qs
 from asyncio import sleep, ensure_future
 
 from starlette.applications import Starlette
@@ -8,7 +9,7 @@ from starlette.background import BackgroundTask
 from models import setup_databases, Character, Data
 from ninja import create_or_update_data_for_character
 
-SLEEP_TIME = 60 * 60
+SLEEP_TIME = 60 * 30
 
 templates = Jinja2Templates(directory='templates')
 
@@ -43,9 +44,25 @@ async def homepage(request):
         data = await request.form()
         await Character.add_url(data["url"])
 
+    characters = []
+    chars = await Character.objects.all()
+
+    for char in chars:
+        data = await Data.objects.filter(character=char).all()
+        url = urlparse(char.url)
+        qs = parse_qs(url.query)
+        characters.append({
+            "id": char.id,
+            "updated": data[-1].last_update,
+            "account": qs["account"][0],
+            "name": qs["name"][0],
+            "level": data[-1].level,
+        })
+
+
     context = {
         "request": request,
-        "characters": await Character.objects.all(),
+        "characters": characters,
     }
     return templates.TemplateResponse("index.html", context)
 

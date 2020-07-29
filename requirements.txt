@@ -1,7 +1,7 @@
 orm==0.1.5
 httpx==0.11.1
 starlette==0.13.2
-uvicorn==0.11.3
+uvicorn==0.11.7
 jinja2==2.11.1
 databases[sqlite]
 python-multipart
